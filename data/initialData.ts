@@ -1,0 +1,18 @@
+export const initialExercises = [
+  {id: 1, name: 'Goblet Squat'},
+  {id: 2, name: 'Bicep Curl (Barbell)'},
+  {id: 3, name: 'Romainian Deadlift (Dumbbell)'},
+  {id: 4, name: 'Lunge (Dumbbell)'},
+  {id: 5, name: 'Bench Press (Barbell)'},
+  {id: 6, name: 'Bench Press (Dumbbell)'},
+  {id: 7, name: 'Bent Over Row (Barbell)'},
+  {id: 8, name: 'Bicep Curl (Dumbbell)'},
+  {id: 9, name: 'Deadlift (Barbell)'},
+  {id: 10, name: 'Hammer Curl (Dumbbell)'},
+  {id: 11, name: 'Lat Pulldown (Cable)'},
+  {id: 12, name: 'Lateral Raise (Dumbbell)'},
+  {id: 13, name: 'Leg Extension (Machine)'},
+  {id: 14, name: 'Leg Press (Machine)'},
+  {id: 15, name: 'Squat (Barbell)'},
+  {id: 16, name: 'Tricep Pushdown'},
+];
