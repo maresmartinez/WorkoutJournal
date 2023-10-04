@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, TextInput, Button} from 'react-native';
+import {View, TextInput, Button, StyleSheet, Text} from 'react-native';
 import {Exercise} from '../../models';
 import Section from '../../components/Section';
 
@@ -17,7 +17,9 @@ const AddExerciseForm = ({
   return (
     <Section title="Add New Exercise">
       <View>
+        <Text style={styles.label}>Exercise Name</Text>
         <TextInput
+          style={styles.textInputContainer}
           value={newExercise.name}
           onChangeText={(text: string) =>
             setNewExercise({...newExercise, name: text})
@@ -32,5 +34,20 @@ const AddExerciseForm = ({
     </Section>
   );
 };
+
+const styles = StyleSheet.create({
+  label: {
+    fontSize: 18,
+    fontWeight: '500',
+    marginBottom: 21,
+  },
+  textInputContainer: {
+    marginBottom: 30,
+    borderRadius: 10,
+    borderColor: 'black',
+    borderWidth: 1,
+    justifyContent: 'flex-end',
+  },
+});
 
 export default AddExerciseForm;

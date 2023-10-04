@@ -16,6 +16,8 @@ import {
 } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import ExerciseList from './pages/exercise/ExerciseList';
+import WorkoutPlansViewer from './pages/workoutPlan/WorkoutPlansViewer';
+import AddWorkoutPlanForm from './pages/workoutPlan/AddWorkoutPlanForm';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -50,6 +52,8 @@ const App = () => {
             <Text style={styles.appDescription}>Log your workouts here.</Text>
           </View>
           <ExerciseList />
+          <WorkoutPlansViewer />
+          <AddWorkoutPlanForm />
         </View>
       </ScrollView>
     </SafeAreaView>
