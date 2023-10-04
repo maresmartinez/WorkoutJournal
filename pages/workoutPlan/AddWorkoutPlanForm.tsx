@@ -3,6 +3,7 @@ import {Text, Layout, Input, Button} from '@ui-kitten/components';
 
 import {WorkoutPlan} from '../../models';
 import AddWorkoutRoundItem from './AddWorkoutRoundItem';
+import defaultStyles from '../../styles/global';
 
 type AddWorkoutPlanFormProps = {
   workoutPlans: WorkoutPlan[];
@@ -52,20 +53,24 @@ const AddWorkoutPlanForm = ({
 
   return (
     <>
-      <Text category="h2">Add New Workout Plan</Text>
+      <Text style={defaultStyles.mb10} category="h2">
+        Add New Workout Plan
+      </Text>
       <Input
+        style={defaultStyles.mb10}
         label="Plan Name"
         value={newPlan.name}
         onChangeText={(text: string) => setNewPlan({...newPlan, name: text})}
       />
       <Input
+        style={defaultStyles.mb20}
         label="Notes"
         value={newPlan.notes}
         multiline
         onChangeText={(text: string) => setNewPlan({...newPlan, notes: text})}
       />
 
-      <Layout>
+      <Layout style={defaultStyles.mb30}>
         {newPlan.rounds.map(round => (
           <AddWorkoutRoundItem
             key={round.id}
@@ -75,6 +80,8 @@ const AddWorkoutPlanForm = ({
           />
         ))}
         <Button
+          appearance="outline"
+          size="small"
           onPress={() => {
             setHighestRoundId(highestRoundId + 1);
             setNewPlan({

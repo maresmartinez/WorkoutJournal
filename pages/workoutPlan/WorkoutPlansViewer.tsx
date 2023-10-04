@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import {View} from 'react-native';
-import {Text} from '@ui-kitten/components';
+import {Layout, Text, Divider} from '@ui-kitten/components';
 
 import AddWorkoutPlanForm from './AddWorkoutPlanForm';
 import {WorkoutPlan} from '../../models';
+import defaultStyles from '../../styles/global';
 
 const WorkoutPlansViewer = () => {
   const mockPlans = [
@@ -26,21 +26,28 @@ const WorkoutPlansViewer = () => {
 
   return (
     <>
-      <Text category="h2">Your Workout Plans</Text>
-      {workoutPlans.map(plan => (
-        <View key={plan.id}>
-          <Text>{plan.name}</Text>
-          {plan.rounds.map(round => (
-            <View key={round.id}>
-              <Text>{`${round.exercise.name} ${round.sets}x${round.repsPerSet}`}</Text>
-            </View>
-          ))}
-        </View>
-      ))}
-      <AddWorkoutPlanForm
-        workoutPlans={workoutPlans}
-        setWorkoutPlans={setWorkoutPlans}
-      />
+      <Layout style={defaultStyles.mb20}>
+        <Text style={defaultStyles.mb10} category="h2">
+          Your Workout Plans
+        </Text>
+        {workoutPlans.map(plan => (
+          <Layout key={plan.id}>
+            <Text category="h6">{plan.name}</Text>
+            {plan.rounds.map(round => (
+              <Layout key={round.id}>
+                <Text>{`${round.exercise.name} ${round.sets}x${round.repsPerSet}`}</Text>
+              </Layout>
+            ))}
+          </Layout>
+        ))}
+      </Layout>
+      <Divider style={defaultStyles.mb20} />
+      <Layout style={defaultStyles.mb20}>
+        <AddWorkoutPlanForm
+          workoutPlans={workoutPlans}
+          setWorkoutPlans={setWorkoutPlans}
+        />
+      </Layout>
     </>
   );
 };

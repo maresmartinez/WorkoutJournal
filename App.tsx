@@ -16,20 +16,21 @@ import {
 
 import ExerciseList from './pages/exercise/ExerciseList';
 import WorkoutPlansViewer from './pages/workoutPlan/WorkoutPlansViewer';
+import defaultStyles from './styles/global';
 
 const App = () => {
   return (
-    <ApplicationProvider {...eva} theme={eva.light}>
+    <ApplicationProvider {...eva} theme={eva.dark}>
       <Layout style={styles.layout}>
         <SafeAreaView>
           <ScrollView>
-            <Layout>
+            <Layout style={defaultStyles.mb20}>
               <Text category="h1">Workout Journal</Text>
               <Text category="s1">Log your workouts here.</Text>
             </Layout>
-            <Divider />
+            <Divider style={defaultStyles.mb20} />
             <ExerciseList />
-            <Divider />
+            <Divider style={defaultStyles.mb20} />
             <WorkoutPlansViewer />
           </ScrollView>
         </SafeAreaView>

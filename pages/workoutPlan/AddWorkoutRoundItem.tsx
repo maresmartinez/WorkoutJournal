@@ -1,4 +1,5 @@
 import React, {useState, useCallback, useEffect} from 'react';
+import {StyleSheet} from 'react-native';
 import {
   Text,
   Input,
@@ -13,6 +14,7 @@ import * as _ from 'lodash';
 import {Exercise, WorkoutPlan, WorkoutRound} from '../../models';
 import {getDBConnection, exerciseTable} from '../../db';
 import {initialExercises} from '../../data/initialData';
+import defaultStyles from '../../styles/global';
 
 type AddWorkoutRoundItemProps = {
   round: WorkoutRound;
@@ -54,8 +56,9 @@ const AddWorkoutRoundItem = ({
 
   return (
     <>
-      <Text>Round</Text>
+      <Text style={defaultStyles.mb10}>Round</Text>
       <Select
+        style={defaultStyles.mb10}
         placeholder="Choose exercise"
         selectedIndex={selectedIndex}
         onSelect={index => {
@@ -76,36 +79,42 @@ const AddWorkoutRoundItem = ({
           </Layout>
         ))}
       </Select>
-      <Input
-        label="Sets"
-        keyboardType="numeric"
-        value={round.sets.toString()}
-        onChangeText={(text: string) => {
-          var givenSet = parseInt(text, 10);
-          var updatedSet = !isNaN(givenSet) ? givenSet : 0;
+      <Layout style={styles.container}>
+        <Input
+          style={[defaultStyles.mb10, defaultStyles.mr10, styles.layout]}
+          label="Sets"
+          keyboardType="numeric"
+          value={round.sets.toString()}
+          onChangeText={(text: string) => {
+            var givenSet = parseInt(text, 10);
+            var updatedSet = !isNaN(givenSet) ? givenSet : 0;
 
-          const roundIndex = newPlan.rounds.findIndex(r => r.id === round.id);
-          newPlan.rounds[roundIndex].sets = updatedSet;
+            const roundIndex = newPlan.rounds.findIndex(r => r.id === round.id);
+            newPlan.rounds[roundIndex].sets = updatedSet;
 
-          setNewPlan({...newPlan, rounds: newPlan.rounds});
-        }}
-      />
-      <Input
-        label="Reps per set"
-        keyboardType="numeric"
-        value={round.repsPerSet.toString()}
-        onChangeText={(text: string) => {
-          var givenReps = parseInt(text, 10);
-          var updatedReps = !isNaN(givenReps) ? givenReps : 0;
+            setNewPlan({...newPlan, rounds: newPlan.rounds});
+          }}
+        />
+        <Input
+          style={[defaultStyles.mb10, styles.layout]}
+          label="Reps Per Set"
+          keyboardType="numeric"
+          value={round.repsPerSet.toString()}
+          onChangeText={(text: string) => {
+            var givenReps = parseInt(text, 10);
+            var updatedReps = !isNaN(givenReps) ? givenReps : 0;
 
-          const roundIndex = newPlan.rounds.findIndex(r => r.id === round.id);
-          newPlan.rounds[roundIndex].repsPerSet = updatedReps;
+            const roundIndex = newPlan.rounds.findIndex(r => r.id === round.id);
+            newPlan.rounds[roundIndex].repsPerSet = updatedReps;
 
-          setNewPlan({...newPlan, rounds: newPlan.rounds});
-        }}
-      />
+            setNewPlan({...newPlan, rounds: newPlan.rounds});
+          }}
+        />
+      </Layout>
       <Button
+        style={defaultStyles.mb30}
         status="danger"
+        size="small"
         onPress={() => {
           const filteredRounds = _.filter(
             newPlan.rounds,
@@ -118,5 +127,17 @@ const AddWorkoutRoundItem = ({
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  layout: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
 export default AddWorkoutRoundItem;
