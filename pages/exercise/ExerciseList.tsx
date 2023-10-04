@@ -51,7 +51,7 @@ const ExerciseList = () => {
   return (
     <>
       <Layout style={defaultStyles.mb20}>
-        <Text style={defaultStyles.mb10} category="h2">
+        <Text style={defaultStyles.mb10} category="h4">
           Exercises
         </Text>
         {exercises.map(exercise => (

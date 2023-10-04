@@ -53,7 +53,7 @@ const AddWorkoutPlanForm = ({
 
   return (
     <>
-      <Text style={defaultStyles.mb10} category="h2">
+      <Text style={defaultStyles.mb10} category="h4">
         Add New Workout Plan
       </Text>
       <Input

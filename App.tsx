@@ -21,28 +21,34 @@ import defaultStyles from './styles/global';
 const App = () => {
   return (
     <ApplicationProvider {...eva} theme={eva.dark}>
-      <Layout style={styles.layout}>
-        <SafeAreaView>
-          <ScrollView>
-            <Layout style={defaultStyles.mb20}>
-              <Text category="h1">Workout Journal</Text>
-              <Text category="s1">Log your workouts here.</Text>
-            </Layout>
+      <SafeAreaView>
+        <ScrollView>
+          <Layout
+            style={[
+              defaultStyles.px20,
+              defaultStyles.pb20,
+              defaultStyles.pt20,
+              styles.titleContainer,
+            ]}>
+            <Text style={styles.titleFont} category="h5">
+              Workout Journal
+            </Text>
+          </Layout>
+          <Layout style={defaultStyles.px20}>
             <Divider style={defaultStyles.mb20} />
             <ExerciseList />
             <Divider style={defaultStyles.mb20} />
             <WorkoutPlansViewer />
-          </ScrollView>
-        </SafeAreaView>
-      </Layout>
+          </Layout>
+        </ScrollView>
+      </SafeAreaView>
     </ApplicationProvider>
   );
 };
 
 const styles = StyleSheet.create({
-  layout: {
-    paddingHorizontal: 20,
-  },
+  titleContainer: {backgroundColor: '#101426'},
+  titleFont: {textAlign: 'center'},
 });
 
 export default App;

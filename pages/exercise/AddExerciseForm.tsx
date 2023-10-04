@@ -17,7 +17,7 @@ const AddExerciseForm = ({
 }: AddExerciseFormProps) => {
   return (
     <>
-      <Text style={defaultStyles.mb10} category="h2">
+      <Text style={defaultStyles.mb10} category="h4">
         Add New Exercises
       </Text>
       <Layout style={defaultStyles.mb10}>

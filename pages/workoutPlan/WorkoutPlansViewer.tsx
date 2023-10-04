@@ -27,7 +27,7 @@ const WorkoutPlansViewer = () => {
   return (
     <>
       <Layout style={defaultStyles.mb20}>
-        <Text style={defaultStyles.mb10} category="h2">
+        <Text style={defaultStyles.mb10} category="h4">
           Your Workout Plans
         </Text>
         {workoutPlans.map(plan => (

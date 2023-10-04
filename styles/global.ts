@@ -13,4 +13,13 @@ export default StyleSheet.create({
   mr10: {
     marginRight: 10,
   },
+  pt20: {
+    paddingTop: 20,
+  },
+  pb20: {
+    paddingBottom: 20,
+  },
+  px20: {
+    paddingHorizontal: 20,
+  },
 });
