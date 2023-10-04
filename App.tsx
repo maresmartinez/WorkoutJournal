@@ -15,7 +15,6 @@ import {
   View,
 } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import AddExerciseForm from './pages/exercise/AddExerciseForm';
 import ExerciseList from './pages/exercise/ExerciseList';
 
 const App = () => {
@@ -51,7 +50,6 @@ const App = () => {
             <Text style={styles.appDescription}>Log your workouts here.</Text>
           </View>
           <ExerciseList />
-          <AddExerciseForm />
         </View>
       </ScrollView>
     </SafeAreaView>
