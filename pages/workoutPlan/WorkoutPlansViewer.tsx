@@ -1,6 +1,9 @@
-import React from 'react';
-import {View, Text} from 'react-native';
-import Section from '../../components/Section';
+import React, {useState} from 'react';
+import {View} from 'react-native';
+import {Text} from '@ui-kitten/components';
+
+import AddWorkoutPlanForm from './AddWorkoutPlanForm';
+import {WorkoutPlan} from '../../models';
 
 const WorkoutPlansViewer = () => {
   const mockPlans = [
@@ -19,9 +22,12 @@ const WorkoutPlansViewer = () => {
     },
   ];
 
+  const [workoutPlans, setWorkoutPlans] = useState<WorkoutPlan[]>(mockPlans);
+
   return (
-    <Section title="Your Workout Plans">
-      {mockPlans.map(plan => (
+    <>
+      <Text category="h2">Your Workout Plans</Text>
+      {workoutPlans.map(plan => (
         <View key={plan.id}>
           <Text>{plan.name}</Text>
           {plan.rounds.map(round => (
@@ -31,7 +37,11 @@ const WorkoutPlansViewer = () => {
           ))}
         </View>
       ))}
-    </Section>
+      <AddWorkoutPlanForm
+        workoutPlans={workoutPlans}
+        setWorkoutPlans={setWorkoutPlans}
+      />
+    </>
   );
 };
 

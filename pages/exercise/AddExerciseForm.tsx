@@ -1,7 +1,7 @@
 import React from 'react';
-import {View, TextInput, Button, StyleSheet, Text} from 'react-native';
+import {Text, Input, Button, Layout} from '@ui-kitten/components';
+
 import {Exercise} from '../../models';
-import Section from '../../components/Section';
 
 type AddExerciseFormProps = {
   newExercise: Exercise;
@@ -15,39 +15,20 @@ const AddExerciseForm = ({
   newExercise,
 }: AddExerciseFormProps) => {
   return (
-    <Section title="Add New Exercise">
-      <View>
-        <Text style={styles.label}>Exercise Name</Text>
-        <TextInput
-          style={styles.textInputContainer}
+    <>
+      <Text category="h2">Add New Exercises</Text>
+      <Layout>
+        <Text category="label">Exercise Name</Text>
+        <Input
           value={newExercise.name}
           onChangeText={(text: string) =>
             setNewExercise({...newExercise, name: text})
           }
         />
-      </View>
-      <Button
-        onPress={addExercise}
-        title="Add exercise"
-        accessibilityLabel="add new exercise"
-      />
-    </Section>
+      </Layout>
+      <Button onPress={addExercise}>Add exercise</Button>
+    </>
   );
 };
-
-const styles = StyleSheet.create({
-  label: {
-    fontSize: 18,
-    fontWeight: '500',
-    marginBottom: 21,
-  },
-  textInputContainer: {
-    marginBottom: 30,
-    borderRadius: 10,
-    borderColor: 'black',
-    borderWidth: 1,
-    justifyContent: 'flex-end',
-  },
-});
 
 export default AddExerciseForm;

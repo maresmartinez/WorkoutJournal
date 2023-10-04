@@ -1,11 +1,19 @@
 import React, {useState} from 'react';
-import {View, TextInput, Button, StyleSheet, Text} from 'react-native';
-import Section from '../../components/Section';
-import {WorkoutPlan} from '../../models';
+import {Text, Layout, Input, Button} from '@ui-kitten/components';
 
-const AddWorkoutPlanForm = () => {
+import {WorkoutPlan} from '../../models';
+import AddWorkoutRoundItem from './AddWorkoutRoundItem';
+
+type AddWorkoutPlanFormProps = {
+  workoutPlans: WorkoutPlan[];
+  setWorkoutPlans: (workoutPlan: WorkoutPlan[]) => void;
+};
+
+const AddWorkoutPlanForm = ({
+  workoutPlans,
+  setWorkoutPlans,
+}: AddWorkoutPlanFormProps) => {
   const emptyRound = {
-    id: 0,
     exercise: {id: 0, name: ''},
     sets: 1,
     repsPerSet: 1,
@@ -18,40 +26,69 @@ const AddWorkoutPlanForm = () => {
   };
   const [newPlan, setNewPlan] = useState<WorkoutPlan>(emptyPlan);
 
+  const [highestRoundId, setHighestRoundId] = useState(1);
+
+  const addWorkoutPlan = () => {
+    let isValid = true;
+
+    if (!newPlan.name.trim()) {
+      isValid = false;
+    }
+
+    newPlan.rounds.forEach(r => {
+      if (!r.exercise.name.trim()) {
+        isValid = false;
+      }
+    });
+
+    if (!isValid) {
+      return;
+    }
+
+    setWorkoutPlans([...workoutPlans, newPlan]);
+
+    setNewPlan(emptyPlan);
+  };
+
   return (
-    <Section title="Add New Workout Plan">
-      <View>
-        <Text style={styles.label}>Plan Name</Text>
-        <TextInput
-          style={styles.textInputContainer}
-          value={newPlan.name}
-          onChangeText={(text: string) => setNewPlan({...newPlan, name: text})}
-        />
-        <Text style={styles.label}>Notes</Text>
-        <TextInput
-          style={styles.textInputContainer}
-          value={newPlan.notes}
-          multiline
-          onChangeText={(text: string) => setNewPlan({...newPlan, notes: text})}
-        />
-      </View>
-    </Section>
+    <>
+      <Text category="h2">Add New Workout Plan</Text>
+      <Input
+        label="Plan Name"
+        value={newPlan.name}
+        onChangeText={(text: string) => setNewPlan({...newPlan, name: text})}
+      />
+      <Input
+        label="Notes"
+        value={newPlan.notes}
+        multiline
+        onChangeText={(text: string) => setNewPlan({...newPlan, notes: text})}
+      />
+
+      <Layout>
+        {newPlan.rounds.map(round => (
+          <AddWorkoutRoundItem
+            key={round.id}
+            round={round}
+            newPlan={newPlan}
+            setNewPlan={setNewPlan}
+          />
+        ))}
+        <Button
+          onPress={() => {
+            setHighestRoundId(highestRoundId + 1);
+            setNewPlan({
+              ...newPlan,
+              rounds: [...newPlan.rounds, {...emptyRound, id: highestRoundId}],
+            });
+          }}>
+          Add round
+        </Button>
+      </Layout>
+
+      <Button onPress={addWorkoutPlan}>Add New Plan</Button>
+    </>
   );
 };
-
-const styles = StyleSheet.create({
-  label: {
-    fontSize: 18,
-    fontWeight: '500',
-    marginBottom: 21,
-  },
-  textInputContainer: {
-    marginBottom: 30,
-    borderRadius: 10,
-    borderColor: 'black',
-    borderWidth: 1,
-    justifyContent: 'flex-end',
-  },
-});
 
 export default AddWorkoutPlanForm;
