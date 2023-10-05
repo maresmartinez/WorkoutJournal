@@ -48,10 +48,7 @@ const WorkoutPlansViewer = () => {
       </Layout>
       <Divider style={defaultStyles.mb20} />
       <Layout style={defaultStyles.mb20}>
-        <AddWorkoutPlanForm
-          workoutPlans={workoutPlans}
-          setWorkoutPlans={setWorkoutPlans}
-        />
+        <AddWorkoutPlanForm setWorkoutPlans={setWorkoutPlans} />
       </Layout>
     </>
   );

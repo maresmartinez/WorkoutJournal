@@ -4,16 +4,13 @@ import {Text, Layout, Input, Button} from '@ui-kitten/components';
 import {WorkoutPlan} from '../../models';
 import AddWorkoutRoundItem from './AddWorkoutRoundItem';
 import defaultStyles from '../../styles/global';
+import {workoutPlansTable, getDBConnection} from '../../db';
 
 type AddWorkoutPlanFormProps = {
-  workoutPlans: WorkoutPlan[] | undefined;
   setWorkoutPlans: (workoutPlan: WorkoutPlan[]) => void;
 };
 
-const AddWorkoutPlanForm = ({
-  workoutPlans = [],
-  setWorkoutPlans,
-}: AddWorkoutPlanFormProps) => {
+const AddWorkoutPlanForm = ({setWorkoutPlans}: AddWorkoutPlanFormProps) => {
   const emptyRound = {
     exercise: {id: 0, name: ''},
     sets: 1,
@@ -29,10 +26,14 @@ const AddWorkoutPlanForm = ({
 
   const [highestRoundId, setHighestRoundId] = useState(1);
 
-  const addWorkoutPlan = () => {
+  const addWorkoutPlan = async () => {
     let isValid = true;
 
     if (!newPlan.name.trim()) {
+      isValid = false;
+    }
+
+    if (!newPlan.rounds.length) {
       isValid = false;
     }
 
@@ -46,9 +47,18 @@ const AddWorkoutPlanForm = ({
       return;
     }
 
-    setWorkoutPlans([...workoutPlans, newPlan]);
+    try {
+      const db = await getDBConnection();
 
-    setNewPlan(emptyPlan);
+      // TODO: Actually save
+      // await workoutPlansTable.saveWorkoutPlanDetailed(db, newPlan);
+
+      setNewPlan(emptyPlan);
+      const updatedPlans = await workoutPlansTable.getAllPlans(db);
+      setWorkoutPlans(updatedPlans);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

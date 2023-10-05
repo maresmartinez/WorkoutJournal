@@ -7,7 +7,6 @@ const workoutRoundsTable = 'workout_rounds';
 const workoutPlanRoundsTable = 'workout_plan_rounds';
 
 const createTables = async (db: SQLiteDatabase) => {
-  // create table if not exists
   const createWorkoutPlansTableQuery = `CREATE TABLE IF NOT EXISTS ${workoutPlansTable} (
       id INTEGER PRIMARY KEY,
       name TEXT NOT NULL,
@@ -28,31 +27,46 @@ const createTables = async (db: SQLiteDatabase) => {
       workout_plan_id INTEGER NOT NULL,
       workout_round_id INTEGER NOT NULL,
       
-      CONSTRAINT fk_workout_plan_id FOREIGN KEY (workout_plan_id) REFERENCES workout_plans(id)
-      CONSTRAINT fk_workout_round_id FOREIGN KEY (workout_round_id) REFERENCES workout_rounds(id)
+      CONSTRAINT fk_workout_plan_id FOREIGN KEY (workout_plan_id) REFERENCES ${workoutPlansTable}(id)
+      CONSTRAINT fk_workout_round_id FOREIGN KEY (workout_round_id) REFERENCES ${workoutRoundsTable}(id)
     );`;
 
-  await db.executeSql(createWorkoutPlansTableQuery);
-  await db.executeSql(createWorkoutRoundsTableQuery);
-  await db.executeSql(createWorkoutPlanRoundsTableQuery);
+  try {
+    await db.executeSql(createWorkoutPlansTableQuery);
+    await db.executeSql(createWorkoutRoundsTableQuery);
+    await db.executeSql(createWorkoutPlanRoundsTableQuery);
+  } catch (error) {
+    console.error(error);
+    throw Error('Failed to insert workout plan tables.');
+  }
 };
 
 const saveWorkoutRound = async (db: SQLiteDatabase, round: WorkoutRound) => {
-  const insertQuery = `INSERT INTO ${workoutRoundsTable} (exercise_id, sets, reps_per_set) VALUES (
-    ${round.exercise.id},
-    ${round.sets},
-    ${round.repsPerSet}
-  );`;
+  try {
+    const insertQuery = `INSERT INTO ${workoutRoundsTable} (exercise_id, sets, reps_per_set) VALUES (
+      ${round.exercise.id},
+      ${round.sets},
+      ${round.repsPerSet}
+    );`;
 
-  return db.executeSql(insertQuery);
+    return db.executeSql(insertQuery);
+  } catch (error) {
+    console.error(error);
+    throw Error('Failed to insert workout round.');
+  }
 };
 
 const saveWorkoutPlan = async (db: SQLiteDatabase, plan: WorkoutPlan) => {
-  const insertQuery = `INSERT INTO ${workoutPlansTable} (name, notes) VALUES ('${
-    plan.name
-  }', ${plan.notes ?? 'null'});`;
+  try {
+    const insertQuery = `INSERT INTO ${workoutPlansTable} (name, notes) VALUES ('${
+      plan.name
+    }', '${plan.notes ?? null}');`;
 
-  return db.executeSql(insertQuery);
+    return db.executeSql(insertQuery);
+  } catch (error) {
+    console.error(error);
+    throw Error('Failed to insert workout plan.');
+  }
 };
 
 const saveWorkoutPlanRound = async (
@@ -60,11 +74,36 @@ const saveWorkoutPlanRound = async (
   planId: number,
   roundId: number,
 ) => {
-  const insertQuery = `INSERT INTO ${workoutPlanRoundsTable} (workout_plan_id, workout_round_id)
-    VALUES (${planId}, ${roundId}
-  )`;
+  try {
+    const insertQuery = `INSERT INTO ${workoutPlanRoundsTable} (workout_plan_id, workout_round_id)
+      VALUES (${planId}, ${roundId}
+    )`;
 
-  return db.executeSql(insertQuery);
+    return db.executeSql(insertQuery);
+  } catch (error) {
+    console.error(error);
+    throw Error('Failed to insert workout plan round.');
+  }
+};
+
+const saveWorkoutPlanDetailed = async (
+  db: SQLiteDatabase,
+  plan: WorkoutPlan,
+) => {
+  try {
+    const plansResult = await saveWorkoutPlan(db, plan);
+    const planId = plansResult[0].insertId;
+
+    plan.rounds.forEach(async round => {
+      const roundResult = await saveWorkoutRound(db, round);
+      const roundId = roundResult[0].insertId;
+
+      await saveWorkoutPlanRound(db, planId, roundId);
+    });
+  } catch (error) {
+    console.error(error);
+    throw Error('Failed to insert plan.');
+  }
 };
 
 const saveManyPlans = async (db: SQLiteDatabase, plans: WorkoutPlan[]) => {
@@ -163,4 +202,5 @@ export {
   saveWorkoutPlanRound,
   getWorkoutRoundsByPlanId,
   getAllPlans,
+  saveWorkoutPlanDetailed,
 };

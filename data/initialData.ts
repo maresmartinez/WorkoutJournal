@@ -6,7 +6,7 @@ export const initialExercises = [
   {id: 5, name: 'Bench Press (Barbell)'},
   {id: 6, name: 'Bench Press (Dumbbell)'},
   {id: 7, name: 'Bent Over Row (Barbell)'},
-  {id: 8, name: 'Bicep Curl (Dumbbell)'},
+  {id: 8, name: 'Cross Body Hammer Curl (Dumbbell)'},
   {id: 9, name: 'Deadlift (Barbell)'},
   {id: 10, name: 'Hammer Curl (Dumbbell)'},
   {id: 11, name: 'Lat Pulldown (Cable)'},
