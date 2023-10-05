@@ -16,6 +16,12 @@ export type WorkoutRound = {
   repsPerSet: number;
 };
 
+export type WorkoutPlanRound = {
+  id: number;
+  workoutPlanId: number;
+  workoutRoundId: number;
+};
+
 export type WorkoutPlan = {
   id: number;
   name: string;

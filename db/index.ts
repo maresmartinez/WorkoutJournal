@@ -1,5 +1,6 @@
 import {enablePromise, openDatabase} from 'react-native-sqlite-storage';
 import * as exerciseTable from './exercises';
+import * as workoutPlansTable from './workoutPlans';
 
 enablePromise(true);
 
@@ -10,8 +11,9 @@ const getDBConnection = async () => {
   });
 
   await exerciseTable.createTable(db);
+  await workoutPlansTable.createTables(db);
 
   return db;
 };
 
-export {getDBConnection, exerciseTable};
+export {getDBConnection, exerciseTable, workoutPlansTable};

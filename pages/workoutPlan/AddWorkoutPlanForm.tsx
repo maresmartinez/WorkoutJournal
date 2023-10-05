@@ -6,12 +6,12 @@ import AddWorkoutRoundItem from './AddWorkoutRoundItem';
 import defaultStyles from '../../styles/global';
 
 type AddWorkoutPlanFormProps = {
-  workoutPlans: WorkoutPlan[];
+  workoutPlans: WorkoutPlan[] | undefined;
   setWorkoutPlans: (workoutPlan: WorkoutPlan[]) => void;
 };
 
 const AddWorkoutPlanForm = ({
-  workoutPlans,
+  workoutPlans = [],
   setWorkoutPlans,
 }: AddWorkoutPlanFormProps) => {
   const emptyRound = {

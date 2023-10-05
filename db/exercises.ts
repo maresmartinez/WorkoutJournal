@@ -13,12 +13,31 @@ const createTable = async (db: SQLiteDatabase) => {
   await db.executeSql(query);
 };
 
-const getAllItems = async (db: SQLiteDatabase): Promise<Exercise[]> => {
+const getExerciseById = async (
+  db: SQLiteDatabase,
+  exerciseId: number,
+): Promise<Exercise[]> => {
   try {
     const exercises: Exercise[] = [];
     const results = await db.executeSql(
-      `SELECT rowid as id, * FROM ${tableName}`,
+      `SELECT * FROM ${tableName} WHERE id = ${exerciseId}`,
     );
+    results.forEach(result => {
+      for (let index = 0; index < result.rows.length; index++) {
+        exercises.push(result.rows.item(index));
+      }
+    });
+    return exercises;
+  } catch (error) {
+    console.error(error);
+    throw Error(`Failed to get exercise id ${exerciseId}.`);
+  }
+};
+
+const getAllItems = async (db: SQLiteDatabase): Promise<Exercise[]> => {
+  try {
+    const exercises: Exercise[] = [];
+    const results = await db.executeSql(`SELECT * FROM ${tableName}`);
     results.forEach(result => {
       for (let index = 0; index < result.rows.length; index++) {
         exercises.push(result.rows.item(index));
@@ -56,4 +75,12 @@ const deleteTable = async (db: SQLiteDatabase) => {
   await db.executeSql(query);
 };
 
-export {createTable, getAllItems, saveItem, deleteItem, deleteTable, saveMany};
+export {
+  createTable,
+  getAllItems,
+  saveItem,
+  deleteItem,
+  deleteTable,
+  saveMany,
+  getExerciseById,
+};

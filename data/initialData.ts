@@ -16,3 +16,42 @@ export const initialExercises = [
   {id: 15, name: 'Squat (Barbell)'},
   {id: 16, name: 'Tricep Pushdown'},
 ];
+
+export const initialWorkoutPlans = [
+  {
+    id: 0,
+    name: 'Leg Day',
+    rounds: [
+      {
+        id: 0,
+        exercise: {id: 1, name: 'Goblet Squat'},
+        sets: 3,
+        repsPerSet: 12,
+      },
+      {
+        id: 1,
+        exercise: {id: 1, name: 'Russian Deadlift'},
+        sets: 3,
+        repsPerSet: 12,
+      },
+    ],
+  },
+  {
+    id: 1,
+    name: 'Arm Day',
+    rounds: [
+      {
+        id: 0,
+        exercise: {id: 2, name: 'Bicep Curl (Barbell)'},
+        sets: 3,
+        repsPerSet: 12,
+      },
+      {
+        id: 1,
+        exercise: {id: 5, name: 'Bench Press (Barbell)'},
+        sets: 3,
+        repsPerSet: 12,
+      },
+    ],
+  },
+];
