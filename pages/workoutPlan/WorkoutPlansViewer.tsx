@@ -20,6 +20,24 @@ const WorkoutPlansViewer = () => {
         },
       ],
     },
+    {
+      id: 1,
+      name: 'Arm Day',
+      rounds: [
+        {
+          id: 0,
+          exercise: {id: 2, name: 'Bicep Curl (Barbell)'},
+          sets: 3,
+          repsPerSet: 12,
+        },
+        {
+          id: 1,
+          exercise: {id: 5, name: 'Bench Press (Barbell)'},
+          sets: 3,
+          repsPerSet: 12,
+        },
+      ],
+    },
   ];
 
   const [workoutPlans, setWorkoutPlans] = useState<WorkoutPlan[]>(mockPlans);
@@ -31,7 +49,7 @@ const WorkoutPlansViewer = () => {
           Your Workout Plans
         </Text>
         {workoutPlans.map(plan => (
-          <Layout key={plan.id}>
+          <Layout style={defaultStyles.mb10} key={plan.id}>
             <Text category="h6">{plan.name}</Text>
             {plan.rounds.map(round => (
               <Layout key={round.id}>
